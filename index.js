@@ -77,6 +77,24 @@ async function run() {
     }
    })
 
+  //  add books 
+
+    app.post('/books',async(req,res)=>{
+      try{
+        const newBook = req.body
+         if (typeof newBook.tags === "string") {
+         newBook.tags = newBook.tags.split(",").map(tag => tag.trim());
+          }
+          newBook.dateAdded = new Date();
+       const result = await booksCollection.insertOne(newBook)
+       res.send(result)
+      }
+       catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "Server error" });
+      }
+    })
+
 
 
    
