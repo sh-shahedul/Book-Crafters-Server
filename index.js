@@ -47,14 +47,20 @@ async function run() {
     }
    })
 
-  //  all books 
+  //  all books amd query email 
    app.get('/books',async(req,res)=>{
      try {
         const options = {
             sort: { dateAdded: -1 },
            
         }
-        const cursor = booksCollection.find({}, options);
+         const query ={}
+        const email = req.query.email
+       
+        if(email){
+          query.email = email
+        }
+        const cursor = booksCollection.find(query, options);
         const result = await cursor.toArray();
 
         res.send(result);
@@ -63,6 +69,7 @@ async function run() {
         res.status(500).send({ message: "Failed to fetch books" });
     }
    })
+
       // book details 
    app.get('/books/:id',async(req,res)=>{
    try{
@@ -76,6 +83,9 @@ async function run() {
         res.status(500).send({ message: "Failed to fetch books" });
     }
    })
+
+
+
 
   //  add books 
 
@@ -95,7 +105,7 @@ async function run() {
       }
     })
 
-
+    delete 
 
    
     await client.db("admin").command({ ping: 1 });
