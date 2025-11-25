@@ -105,7 +105,15 @@ async function run() {
       }
     })
 
-    delete 
+    // delete  api 
+
+    app.delete('/books/:id',async(req,res)=>{
+      
+       const id = req.params.id;
+       const query = {_id: new ObjectId(id)}
+       const result = await booksCollection.deleteOne(query)
+       res.send(result)
+    })
 
    
     await client.db("admin").command({ ping: 1 });
